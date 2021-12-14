@@ -1,0 +1,134 @@
+#default config
+#Date: 2021.02.19
+#Author: Loon
+
+[General]
+ipv6 = false
+skip-proxy = 192.168.0.0/16,10.0.0.0/8,172.16.0.0/12,localhost,*.local,e.crashlynatics.com
+bypass-tun = 10.0.0.0/8,100.64.0.0/10,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,192.0.0.0/24,192.0.2.0/24,192.88.99.0/24,192.168.0.0/16,198.18.0.0/15,198.51.100.0/24,203.0.113.0/24,224.0.0.0/4,255.255.255.255/32
+dns-server = system,8.8.4.4,114.114.114.114
+allow-udp-proxy = false
+allow-wifi-access = false
+wifi-access-http-port = 7222
+wifi-access-socket5-port = 7221
+proxy-test-url = http://www.qualcomm.cn/generate_204
+test-timeout = 3
+ssid-trigger = "default":rule, "cellular":proxy,"1+1=4, 5g":direct,"Patsnap_Guest":rule
+
+[Proxy]
+
+[Remote Proxy]
+[Remote Filter]
+[Proxy Group]
+Proxy = select,SSID Policy
+HK Proxies = fallback,t.11-1602.xyz,url = http://www.gstatic.com/generate_204,interval = 300,max-timeout = 3000
+X-UI Proxies = url-test,xui-vmess-p80-002,xui-vmess-p80-001,url = http://www.gstatic.com/generate_204,interval = 600
+CN Proxies = url-test,cn-ssr-02,cn-ss-01,cn-ssr-02-2,cn-ss-01-2,zhuoqi-ssr,url = http://www.gstatic.com/generate_204,interval = 300
+SSID Policy = ssid,default=Fallback Policy,cellular=X-UI Proxies,"Patsnap_Guest"=CN Proxies,"1+1=4, 5g"=DIRECT,"rabbit_5G"=DIRECT
+Fallback Policy = fallback,HK Proxies,url = http://www.gstatic.com/generate_204,interval = 600,max-timeout = 3000
+Apple Policy = ssid,default=DIRECT,cellular=X-UI Proxies,"1+1=4, 5g"=DIRECT,"Patsnap_Guest"=Proxy
+Office Policy = ssid,default=DIRECT,cellular=DIRECT,"Patsnap_Office"=CN Proxies,"Patsnap_Guest"=CN Proxies
+TikTok Policy = ssid,default=DIRECT,cellular=X-UI Proxies,"Patsnap_Office"=Office Policy,"Patsnap_Guest"=Office Policy
+Final = ssid,default=DIRECT,cellular=X-UI Proxies,"aaa"=DIRECT,"Patsnap_Guest"=Office Policy
+[Rule]
+DOMAIN-SUFFIX,weixin.qq.com,Office Policy
+DOMAIN-SUFFIX,umeng.com,Office Policy
+DOMAIN-SUFFIX,bijiago.com,Office Policy
+DOMAIN-SUFFIX,zhimg.com,Office Policy
+DOMAIN-SUFFIX,zhihu.com,Office Policy
+DOMAIN-SUFFIX,hzstat.cn,Office Policy
+URL-REGEX,haohaozhu.*,Office Policy
+DOMAIN-SUFFIX,pddpic.com,Office Policy
+DOMAIN-KEYWORD,zhipin.com,Office Policy
+DOMAIN-SUFFIX,10jqka.com.cn,Office Policy
+DOMAIN-SUFFIX,bytegecko.com,TikTok Policy
+DOMAIN-SUFFIX,bytemastatic.com,TikTok Policy
+#Type:DOMAIN-SUFFIX,DOMAIN,DOMAIN-KEYWORD,USER-AGENT,URL-REGEX,IP-CIDR
+#Strategy:DIRECT,PROXY,REJECT
+#Options:no-resolve(only for cidr)
+
+#DOMAIN-KEYWORD,google,Proxy
+
+GEOIP,cn,DIRECT
+FINAL,Final
+
+[Remote Rule]
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ZhihuAds/ZhihuAds.list, policy=REJECT, tag=ZhihuAds, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Lan/Lan.list, policy=DIRECT, tag=Lan, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Google/Google.list, policy=Proxy, tag=Google, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Notion/Notion.list, policy=Proxy, tag=Notion, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/TestFlight/TestFlight.list, policy=Apple Policy, tag=TestFlight, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Telegram/Telegram.list, policy=Proxy, tag=Telegram, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/GitHub/GitHub.list, policy=Proxy, tag=GitHub, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Instagram/Instagram.list, policy=Proxy, tag=Instagram, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Tumblr/Tumblr.list, policy=Proxy, tag=Tumblr, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Facebook/Facebook.list, policy=Proxy, tag=Facebook, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitter/Twitter.list, policy=Proxy, tag=Twitter, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Nintendo/Nintendo.list, policy=Proxy, tag=Nintendo, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Dropbox/Dropbox.list, policy=Proxy, tag=Dropbox, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTube/YouTube.list, policy=Proxy, tag=YouTube, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/GlobalMedia/GlobalMedia.list, policy=Proxy, tag=GlobalMedia, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Global/Global.list, policy=Proxy, tag=Global, enabled=false
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ByteDance/ByteDance.list, policy=TikTok Policy, tag=ByteDance, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/TikTok/TikTok.list, policy=TikTok Policy, tag=TikTok, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/JingDong/JingDong.list, policy=Office Policy, tag=JD, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Baidu/Baidu.list, policy=Office Policy, tag=Baidu, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ICBC/ICBC.list, policy=Office Policy, tag=ICBC, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/BOC/BOC.list, policy=Office Policy, tag=BOC, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/CMB/CMB.list, policy=Office Policy, tag=CMB, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/iQIYI/iQIYI.list, policy=Office Policy, tag=iQIYI, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/CaiNiao/CaiNiao.list, policy=Office Policy, tag=CaiNiao, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/BiliBili/BiliBili.list, policy=Office Policy, tag=BiliBili, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Synology/Synology.list, policy=Office Policy, tag=Synology, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AppleNews/AppleNews.list, policy=Apple Policy, tag=Apple Music, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple.list, policy=Apple Policy, tag=Apple, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AppStore/AppStore.list, policy=Apple Policy, tag=Apple Store, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/iCloud/iCloud.list, policy=Apple Policy, tag=iCloud, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Pinduoduo/Pinduoduo.list, policy=Office Policy, tag=Pinduoduo, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Alibaba/Alibaba.list, policy=Office Policy, tag=Alibaba, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Alibaba/Alibaba_Domain.list, policy=Office Policy, tag=Alibaba-Domain, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/XianYu/XianYu.list, policy=Office Policy, tag=Xianyu, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Weibo/Weibo.list, policy=Office Policy, tag=Weibo, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/SMZDM/SMZDM.list, policy=Office Policy, tag=SMZDM, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/China/China.list, policy=DIRECT, tag=China, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaIPsBGP/ChinaIPsBGP.list, policy=DIRECT, tag=ChinaIPsBGP, enabled=true
+[Host]
+[URL Rewrite]
+^https?:\/\/(www.)?(g|google)\.cn 302 https://www.google.com
+
+[Remote Rewrite]
+[Script]
+cron "5 0 * * *" script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_signin.lnscript, tag=SMZDM SignIn
+cron "* * 3 * * ?" script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/famijia/famijia_checkin.lnscript, tag=FaMijia Check-in
+cron "* * 2 * * ?" script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/10010/unicom_signin.lnscript, tag=Unicom
+http-response ^https?:\/\/mb3admin.com\/admin\/service\/registration\/validateDevice script-path=https://cdn.jsdelivr.net/gh/aaliyahkqqmbt/3dmmpemby@main/EmbyPremiere.js, requires-body=true, timeout=10, enabled=false, tag=Emby Pro
+http-response ^https?://api\.m\.jd\.com/client\.action\?functionId=(wareBusiness|serverConfig|basicConfig) script-path=https://raw.githubusercontent.com/JDHelloWorld/jd_price/main/jd_price.js, requires-body=true, timeout=10, enabled=false, tag=JD Price
+
+
+[Remote Script]
+https://raw.githubusercontent.com/NobyDa/Script/master/Loon/Loon_GetCookie.conf, tag=NobyDa: Get Cookie, enabled=true
+https://raw.githubusercontent.com/NobyDa/Script/master/Loon/Loon_GetTask.conf, tag=NoByDa: Get Task, enabled=true
+https://raw.githubusercontent.com/NobyDa/Script/master/Loon/Loon_TF_Download.conf, tag=NoByDa: TestFlight, enabled=true
+[Plugin]
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Plugin/Unlock/TikTokKR.plugin, tag=TikTok KR, enabled=true
+https://raw.githubusercontent.com/HoCooo/Loon/main/JdJfPrice.plugin, tag=京东价格返利, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/bilibili/bilibili_plus.lnplugin, tag=哔哩哔哩去广告, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Loon/Redirect/Redirect.plugin, tag=重定向, enabled=true
+https://raw.githubusercontent.com/HoCooo/Loon/main/Auto-Policy.plugin, tag=自动换节点, enabled=true
+https://raw.githubusercontent.com/app2smile/rules/master/plugin/tieba.plugin, tag=百度贴吧去广告, enabled=true
+https://raw.githubusercontent.com/app2smile/rules/master/plugin/baidu-no-redirect.plugin, tag=百度搜索防跳转, enabled=true
+https://raw.githubusercontent.com/bluesmallpig/scripts/main/conf/ydyy.plugin, tag=YDYY, enabled=true
+https://raw.githubusercontent.com/Peng-YM/Sub-Store/master/config/Loon.plugin, tag=Sub Store, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/zhihu/zhihu_lite.lnplugin, tag=Zhihu Lite, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/startup/startup.lnplugin, tag=Startup Ads, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_remove_ads.lnplugin, tag=SMZDM Ads, enabled=true
+https://raw.githubusercontent.com/mymoonyue/Loon/master/Plugin/YouTubeADs.plugin, tag=Youtube Ads, enabled=true
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Plugin/TF-Download.plugin, tag=TF-Download, enabled=true
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Plugin/Block/Advertising.plugin, tag=Advertising.plugin, enabled=true
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Plugin/General.plugin, tag=General.plugin, enabled=true
+https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.loon.tf.plugin, policy=PROXY, tag=BoxJS Plug-in, enabled=true
+[Mitm]
+hostname = mb3admin.com,act.10010.com,boxjs.net,*.googlevideo.com,api.m.jd.com,trade-acs.m.taobao.com
+ca-p12 = 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
+ca-passphrase = 00993748
+skip-server-cert-verify = false

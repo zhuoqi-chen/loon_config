@@ -3,6 +3,7 @@
 [Script]
 http-response ^https?:\/\/capis(-?\w*)?\.didapinche\.com\/ad\/cx\/startup\? requires-body=1,script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/bilibili/bilibili_plus.js,tag=嘀嗒出行_开屏去广告
 http-response ^https?:\/\/app\.bilibili\.com\/x\/v2\/splash\/list requires-body=1,script-path=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/bilibili/bilibili_plus.js,tag=BiliBili_开屏去广告
+http-response ^https?:\/\/mp\.weixin\.qq\.com\/mp\/getappmsgad requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/QuantumultX/File/Wechat.js,tag=去除公众号文章底部广告
 
 [MITM]
-hostname = capis.didapinche.com,app.bilibili.com
+hostname = capis.didapinche.com,app.bilibili.com,mp.weixin.qq.com
